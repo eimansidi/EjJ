@@ -12,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 public class MiniController {
 
     @FXML
+    private ImageView carImageView;
+
+    @FXML
     private ImageView lightsButton;
 
     @FXML
@@ -33,6 +36,25 @@ public class MiniController {
             lightsButton.setImage(new Image(getClass().getResource("/com/eiman/ejj/imagenes/lucesOn.png").toExternalForm()));
             lightsOverlayImageView.setVisible(true);
             lightsOn = true;
+        }
+    }
+
+    /**
+     * Cambia el color del coche segun el boton de color presionado.
+     * Determina el nuevo color basado en el ID del boton.
+     *
+     * @param event ImageView del color seleccionado.
+     */
+    @FXML
+    private void changeColor(MouseEvent event) {
+        ImageView colorButton = (ImageView) event.getSource();
+        String colorId = colorButton.getId().replace("color", "mini");
+        String imagePath = String.format("/com/eiman/ejj/imagenes/%s.png", colorId);
+
+        carImageView.setImage(new Image(getClass().getResource(imagePath).toExternalForm()));
+
+        if (lightsOn) {
+            toggleLights(); // Apaga las luces si estaban encendidas al cambiar de color
         }
     }
 }
